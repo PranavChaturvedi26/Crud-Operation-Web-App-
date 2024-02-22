@@ -1,9 +1,8 @@
-![image](https://github.com/dmethi9871/Alpine-CRUD/assets/76877961/12729603-626b-434d-a91e-bfd20f81db62)
+![300188884-12729603-626b-434d-a91e-bfd20f81db62](https://github.com/PranavChaturvedi26/Crud-Operation-Web-App-/assets/72809454/cb987c78-a73b-4612-bc96-a034cae18222)
+
 
 ```markdown
-# Alpine CRUD
-
-Alpine CRUD is a simplified implementation of a CRUD system using the Alpine.js JavaScript framework. It allows users to seamlessly perform basic operations on data, including adding, viewing, updating, and deleting records. The application ensures an interactive user experience by leveraging the dynamic and responsive features of Alpine.js. Manage your data entities effortlessly with Alpine CRUD.
+# CRUD
 
 ## Features
 
