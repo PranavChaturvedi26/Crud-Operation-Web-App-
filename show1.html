@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Data</title>
+</head>
+
+<body>
+    <h1>Show Data</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th><button onclick="sortTable('ID')">ID</button></th>
+                <th><button onclick="sortTable('Name')">Name</button></th>
+                <th><button onclick="sortTable('Age')">Age</button></th>
+                <th><button onclick="sortTable('Class')">Class</button></th>
+                <th><button onclick="sortTable('Street')">Street</button></th>
+                <th><button onclick="sortTable('City')">City</button></th>
+                <th><button onclick="sortTable('State')">State</button></th>
+                <th><button onclick="sortTable('Zipcode')">Zipcode</button></th>
+                <th><button onclick="sortTable('HobbyName1')">Hobby 1</button></th>
+                <th><button onclick="sortTable('HobbyName2')">Hobby 2</button></th>
+                <th><button onclick="sortTable('HobbyName3')">Hobby 3</button></th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="data-table-body"></tbody>
+    </table>
+
+    <script>
+        function deleteRecord(event, student_id) {
+            event.preventDefault();
+            fetch(`/api/delete-student/${student_id}`, {
+                method: 'DELETE',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data.message);
+                    fetchData();
+                })
+                .catch(error => console.error('Error deleting record:', error));
+        }
+
+        function sortTable(column) {
+            fetch('/api/combined-data')
+                .then(response => response.json())
+                .then(data => {
+                    data.sort((a, b) => {
+                        if (a[column] < b[column]) return -1;
+                        if (a[column] > b[column]) return 1;
+                        return 0;
+                    });
+
+                    const tableBody = document.getElementById('data-table-body');
+                    tableBody.innerHTML = '';
+
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${record.ID}</td>
+                            <td>${record.Name}</td>
+                            <td>${record.Age}</td>
+                            <td>${record.Class}</td>
+                            <td>${record.Street}</td>
+                            <td>${record.City}</td>
+                            <td>${record.State}</td>
+                            <td>${record.Zipcode}</td>
+                            <td>${record.HobbyName1}</td>
+                            <td>${record.HobbyName2}</td>
+                            <td>${record.HobbyName3}</td>
+                            <td>
+                                <a href="#" onclick="deleteRecord(event, ${record.ID})">Delete</a>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching and sorting data:', error));
+        }
+
+        function fetchData() {
+            fetch('/api/combined-data')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('data-table-body');
+                    tableBody.innerHTML = '';
+
+                    data.forEach(record => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${record.ID}</td>
+                            <td>${record.Name}</td>
+                            <td>${record.Age}</td>
+                            <td>${record.Class}</td>
+                            <td>${record.Street}</td>
+                            <td>${record.City}</td>
+                            <td>${record.State}</td>
+                            <td>${record.Zipcode}</td>
+                            <td>${record.HobbyName1}</td>
+                            <td>${record.HobbyName2}</td>
+                            <td>${record.HobbyName3}</td>
+                            <td>
+                                <a href="#" onclick="deleteRecord(event, ${record.ID})">Delete</a>
+                            </td>`;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+
+        fetchData();
+    </script>
+</body>
+
+</html>
